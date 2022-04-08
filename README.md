@@ -10,7 +10,11 @@ This has been tested on Mac OS X with Docker Desktop. This should work if you ha
 
 Adds a public git repo hosted at `repoUrl` with the name `name` to local hosting.
 
-## Run an app
+## Start an app
+
+`node -r ts-node/register src/app.ts start <name>`
+
+## Stop an app
 
 `node -r ts-node/register src/app.ts start <name>`
 
