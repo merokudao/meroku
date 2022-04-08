@@ -8,17 +8,20 @@ dotenv.config();
 interface Repo {
   url: string;
   name: string;
-};
+}
 
 const generateDockerfileContents = async (repo: Repo): Promise<string> => {
   console.log('Generating docker file...');
-  return await engine.renderFile("Dockerfile", {
+  return await engine.renderFile('Dockerfile', {
     repoUrl: repo.url,
     name: repo.name
   });
 };
 
-const saveDockerfile = async (dockerFile: string, name: string): Promise<string> => {
+const saveDockerfile = async (
+  dockerFile: string,
+  name: string
+): Promise<string> => {
   const filePath = await dockerFilePath(name);
   await fs.writeFile(filePath, dockerFile);
   console.log('Saved docker file at ', filePath);
@@ -26,19 +29,19 @@ const saveDockerfile = async (dockerFile: string, name: string): Promise<string>
 };
 
 const buildDockerImage = (dockerFilePath: string, name: string) => {
-  const dockerBuild = spawn(
-    'docker',
-      ['build',
-      '--no-cache',
-      '-f', dockerFilePath, '.',
-      '-t', dockerImageTag(name)
-    ]
-  );
+  const dockerBuild = spawn('docker', [
+    'build',
+    '--no-cache',
+    '-f',
+    dockerFilePath,
+    '.',
+    '-t',
+    dockerImageTag(name)
+  ]);
 
   setCallback(dockerBuild, (code: number) => {
     console.log('Done with code: ', code);
   });
-
 };
 
 const _add = async (repo: Repo) => {
@@ -48,5 +51,5 @@ const _add = async (repo: Repo) => {
 };
 
 export const add = async (repoUrl: string, name: string) => {
-  await _add({url: repoUrl, name: name});
+  await _add({ url: repoUrl, name: name });
 };
