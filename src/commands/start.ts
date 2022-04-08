@@ -6,7 +6,7 @@ const runDockerImage = async (name: string) => {
     'docker',
       ['run',
       '-p', '3000:3000',
-      // '-d',
+      '-d',
       '--name', name,
       dockerImageTag(name)
     ]
