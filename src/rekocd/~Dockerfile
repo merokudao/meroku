@@ -1,0 +1,16 @@
+FROM alpine/git as cloner
+
+WORKDIR /app
+
+RUN git clone https://github.com/r4881t/v4-ui.git
+
+FROM node:14.17.6 as noder
+WORKDIR /v4-ui
+
+RUN wget https://github.com/direnv/direnv/releases/download/v2.23.0/direnv.linux-amd64; mv direnv.linux-amd64 direnv; chmod 755 direnv ; ./direnv;
+
+COPY --from=cloner /app/v4-ui /v4-ui
+RUN npm i
+RUN sh /v4-ui/Selfhosting
+
+CMD [ "yarn", "dev" ]

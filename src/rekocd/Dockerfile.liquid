@@ -1,0 +1,14 @@
+FROM alpine/git as cloner
+
+WORKDIR /app
+
+RUN git clone {{ repoUrl }} /app/{{ name }}
+
+FROM node:14.17.6 as noder
+WORKDIR /{{ name }}
+
+COPY --from=cloner /app/{{ name }} /{{ name }}
+RUN npm i
+RUN sh /{{ name }}/Selfhosting
+
+CMD [ "yarn", "dev" ]
