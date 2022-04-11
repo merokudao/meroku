@@ -11,4 +11,4 @@ COPY --from=cloner /app/{{ name }} /{{ name }}
 RUN npm i
 RUN sh /{{ name }}/Selfhosting
 
-CMD [ "yarn", "dev" ]
+CMD [ "npm", "start" ]
