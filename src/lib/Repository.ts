@@ -3,6 +3,9 @@ import * as fs from 'fs-extra';
 import path from 'path';
 import { engine, setCallback } from './utils';
 
+/**
+ * Repository Class
+ */
 export class Repository {
   public url?: string;
   public readonly name: string;
