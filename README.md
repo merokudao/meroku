@@ -22,3 +22,4 @@ Adds a public git repo hosted at `repoUrl` with the name `name` to local hosting
 ## Repos with which this can be tried
 
 - https://github.com/r4881t/v4-ui
+- https://github.com/r4881t/cryptoboys-nft-marketplace

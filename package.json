@@ -19,6 +19,7 @@
     "typescript": "^4.6.3"
   },
   "scripts": {
+    "prestart": "source $HOME/.nvm/nvm.sh; nvm use",
     "build": "tsc",
     "start": "node ./build/app.js",
     "dev": "ts-node ./src/app.ts",

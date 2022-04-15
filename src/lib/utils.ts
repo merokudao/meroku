@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
 import { ChildProcessWithoutNullStreams } from 'child_process';
 import { Liquid } from 'liquidjs';
-import * as fs from 'fs-extra';
 import path from 'path';
 
 dotenv.config();
@@ -9,17 +8,6 @@ dotenv.config();
 export const dirName = (name: string) => {
   const hostDir = process.env.HOSTING_DIR as string;
   return path.join(hostDir, name);
-};
-
-export const dockerFilePath = async (name: string): Promise<string> => {
-  const dockDir = path.join(process.env.HOSTING_DIR as string, '.docks');
-  await fs.mkdirp(dockDir);
-  const filePath = path.join(dockDir, 'Dockerfile.' + name);
-  return filePath;
-};
-
-export const dockerImageTag = (name: string): string => {
-  return 'bitpack/' + name + ':latest';
 };
 
 export const setCallback = (

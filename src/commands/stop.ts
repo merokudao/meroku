@@ -1,27 +1,5 @@
-import { spawn } from 'child_process';
-import { setCallback } from '../lib';
+import { Repository } from '../lib';
 
-const stopDockerImage = (name: string) => {
-  const dockerRun = spawn('docker', ['container', 'stop', name]);
-
-  setCallback(dockerRun, (code: number) => {
-    console.log('Docker container stopped. Exit Code: ', code);
-    removeDockerImage(name);
-  });
-};
-
-const removeDockerImage = (name: string) => {
-  const dockerRun = spawn('docker', ['container', 'rm', name]);
-
-  setCallback(dockerRun, (code: number) => {
-    console.log('Docker image removed. Exit code: ', code);
-  });
-};
-
-const _stop = (name: string) => {
-  stopDockerImage(name);
-};
-
-export const stop = (name: string) => {
-  _stop(name);
+export const stop = async (name: string) => {
+  await new Repository(name).stop();
 };
