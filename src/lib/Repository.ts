@@ -1,7 +1,12 @@
 import { spawn } from 'child_process';
 import * as fs from 'fs-extra';
 import path from 'path';
-import { engine, setCallback } from './utils';
+import {
+  engine,
+  remoteHasNpmOrYarn,
+  remoteHasYarn,
+  setCallback
+} from './utils';
 
 /**
  * Repository Class
@@ -11,8 +16,8 @@ export class Repository {
   public readonly name: string;
 
   constructor(name: string, url?: string) {
-    this.url = url;
     this.name = name;
+    this.url = url;
   }
 
   public async add(this: Repository) {
@@ -21,12 +26,25 @@ export class Repository {
     await this.buildDockerImage(dockerFilePath);
   }
 
+  private async isLocalRepoSaved(this: Repository): Promise<boolean> {
+    return true;
+  }
+
+  private async getRepoUrl(this: Repository): Promise<string> {
+    return '';
+  }
+
   private async generateDockerfileContents(this: Repository): Promise<string> {
     console.log('Generating docker file...');
-    return await engine.renderFile('Dockerfile', {
-      repoUrl: this.url,
-      name: this.name
-    });
+    if (this.url && (await remoteHasNpmOrYarn(this.url))) {
+      return await engine.renderFile('Dockerfile', {
+        repoUrl: this.url,
+        name: this.name,
+        hasYarn: await remoteHasYarn(this.url)
+      });
+    } else {
+      throw Error("Repository doesn't have npm or yarn");
+    }
   }
 
   private async saveDockerfile(
