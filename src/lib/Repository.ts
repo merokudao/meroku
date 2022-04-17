@@ -1,9 +1,11 @@
 import { spawn } from 'child_process';
 import * as fs from 'fs-extra';
 import path from 'path';
+import { Selfhosting } from './Selfhosting';
 import {
   engine,
   remoteHasNpmOrYarn,
+  remoteHasSelfhosting,
   remoteHasYarn,
   setCallback
 } from './utils';
@@ -23,7 +25,19 @@ export class Repository {
   public async add(this: Repository) {
     const dockerFileContent = await this.generateDockerfileContents();
     const dockerFilePath = await this.saveDockerfile(dockerFileContent);
-    await this.buildDockerImage(dockerFilePath);
+    // await this.buildDockerImage(dockerFilePath);
+  }
+
+  public async isRemoteValid(this: Repository): Promise<boolean> {
+    if (
+      this.url &&
+      (await remoteHasNpmOrYarn(this.url)) &&
+      (await remoteHasSelfhosting(this.url))
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   private async isLocalRepoSaved(this: Repository): Promise<boolean> {
@@ -36,11 +50,13 @@ export class Repository {
 
   private async generateDockerfileContents(this: Repository): Promise<string> {
     console.log('Generating docker file...');
-    if (this.url && (await remoteHasNpmOrYarn(this.url))) {
+    if (this.url && (await this.isRemoteValid())) {
+      const selfHosting = await Selfhosting.loadFromUrl(new URL(this.url));
       return await engine.renderFile('Dockerfile', {
         repoUrl: this.url,
         name: this.name,
-        hasYarn: await remoteHasYarn(this.url)
+        hasYarn: await remoteHasYarn(this.url),
+        seho: selfHosting
       });
     } else {
       throw Error("Repository doesn't have npm or yarn");

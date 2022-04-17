@@ -3,6 +3,7 @@ import { ChildProcessWithoutNullStreams } from 'child_process';
 import { Liquid } from 'liquidjs';
 import path from 'path';
 import urlExist from 'url-exist';
+import axios from 'axios';
 
 dotenv.config();
 
@@ -43,10 +44,22 @@ export const remoteHasNpm = async (githubRepoUrl: string): Promise<boolean> => {
   return await urlExist(packageJson);
 };
 
+export const remoteHasSelfhosting = async (
+  githubRepoUrl: string
+): Promise<boolean> => {
+  const selfhosting = githubRepoUrl + '/blob/main/Selfhosting';
+  return await urlExist(selfhosting);
+};
+
 export const remoteHasNpmOrYarn = async (
   githubRepoUrl: string
 ): Promise<boolean> => {
   return (
     (await remoteHasYarn(githubRepoUrl)) || (await remoteHasNpm(githubRepoUrl))
   );
+};
+
+export const readUrl = async (url: URL): Promise<string> => {
+  const response = await axios.get(url.href);
+  return response.data;
 };

@@ -29,12 +29,13 @@
     "pretty": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
   "dependencies": {
+    "axios": "^0.26.1",
     "chalk": "^5.0.1",
     "commander": "^9.1.0",
     "dotenv": "^16.0.0",
     "fs-extra": "^10.0.1",
     "liquidjs": "^9.36.0",
-    "url-exist": "^3.0.0"
+    "url-exist": "2.0.2"
   },
   "files": [
     "build",

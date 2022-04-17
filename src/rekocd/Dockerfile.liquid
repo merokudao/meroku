@@ -8,7 +8,34 @@ FROM node:14.17.6 as noder
 WORKDIR /{{ name }}
 
 COPY --from=cloner /app/{{ name }} /{{ name }}
-RUN npm i
-RUN sh /{{ name }}/Selfhosting
 
-CMD [ "npm", "start" ]
+{% if hasYarn %}
+
+RUN yarn install
+
+{% else %}
+
+RUN npm i
+
+{% endif %}
+
+{% for instruction in seho.runInstructions %}
+RUN {{ instruction }}
+{% endfor %}
+
+{% if hasYarn %}
+{% if seho.buildCmd %}
+RUN yarn {{ seho.buildCmd }}
+{% endif %}
+
+CMD [ "yarn", "{{ seho.startCmd }}" ]
+
+{% else %}
+
+{% if seho.buildCmd %}
+RUN npm run {{ seho.buildCmd }}
+{% endif %}
+
+CMD [ "npm", "run", "{{ seho.startCmd }}" ]
+
+{% endif %}
