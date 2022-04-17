@@ -1,14 +1,21 @@
 import { spawn } from 'child_process';
 import * as fs from 'fs-extra';
 import path from 'path';
+import { PackageJson } from './PackageJson';
 import { Selfhosting } from './Selfhosting';
 import {
   engine,
+  readUrl,
   remoteHasNpmOrYarn,
   remoteHasSelfhosting,
   remoteHasYarn,
+  repoUrlForFile,
   setCallback
 } from './utils';
+import Debug from 'debug';
+import urlExist from 'url-exist';
+
+const debug = Debug('meroku:Repository');
 
 /**
  * Repository Class
@@ -16,6 +23,16 @@ import {
 export class Repository {
   public url?: string;
   public readonly name: string;
+
+  private readonly envFileOrder = [
+    '.env',
+    '.envrc',
+    '.env.dist',
+    '.env.prod',
+    '.env.dev',
+    '.envrc.example',
+    '.env.example'
+  ];
 
   constructor(name: string, url?: string) {
     this.name = name;
@@ -48,16 +65,51 @@ export class Repository {
     return '';
   }
 
+  private async guessEnvFile(this: Repository): Promise<string | undefined> {
+    if (this.url) {
+      for (const fName of this.envFileOrder) {
+        const url = repoUrlForFile(this.url as string, fName);
+        debug('Checking for env file: ', url);
+        if (await urlExist(url)) {
+          return fName;
+        }
+      }
+    }
+  }
+
   private async generateDockerfileContents(this: Repository): Promise<string> {
     console.log('Generating docker file...');
     if (this.url && (await this.isRemoteValid())) {
-      const selfHosting = await Selfhosting.loadFromUrl(new URL(this.url));
-      return await engine.renderFile('Dockerfile', {
-        repoUrl: this.url,
-        name: this.name,
-        hasYarn: await remoteHasYarn(this.url),
-        seho: selfHosting
-      });
+      const _url = new URL(this.url);
+      const selfHosting = await Selfhosting.loadFromRemoteRepo(_url);
+      const packageJson = await PackageJson.fromUrl(_url);
+      if (packageJson) {
+        selfHosting.buildCmd = packageJson.getBuildCmd();
+        selfHosting.startCmd = packageJson.getStartCmd();
+        if (selfHosting.startCmd) {
+          if (selfHosting.distEnvFile === undefined) {
+            const guessedEnvFile = await this.guessEnvFile();
+            selfHosting.distEnvFile = guessedEnvFile;
+            if (selfHosting.distEnvFile === undefined) {
+              console.warn(
+                'No dist env file found. Please specify one using `DIST_ENVFILE` instruction in `Selfhosting`'
+              );
+            }
+          }
+          return await engine.renderFile('Dockerfile', {
+            repoUrl: this.url,
+            name: this.name,
+            hasYarn: await remoteHasYarn(this.url),
+            seho: selfHosting
+          });
+        } else {
+          throw Error(
+            'Unable to find a start command. Try specifying it using `START` instruction in `Selfhosting` file.'
+          );
+        }
+      } else {
+        throw Error('Invalid package.json');
+      }
     } else {
       throw Error("Repository doesn't have npm or yarn");
     }
@@ -69,7 +121,7 @@ export class Repository {
   ): Promise<string> {
     const filePath = await this.dockerFilePath();
     await fs.writeFile(filePath, dockerFile);
-    console.log('Saved docker file at ', filePath);
+    console.info('Saved docker file at ', filePath);
     return filePath;
   }
 
@@ -92,7 +144,7 @@ export class Repository {
     ]);
 
     setCallback(dockerBuild, (code: number) => {
-      console.log('Done with code: ', code);
+      console.info('Done with code: ', code);
     });
   }
 
@@ -112,7 +164,7 @@ export class Repository {
     ]);
 
     setCallback(dockerRun, (code: number) => {
-      console.log('Done with code: ', code);
+      console.info('Done with code: ', code);
     });
   }
 

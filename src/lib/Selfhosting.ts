@@ -1,5 +1,5 @@
 import fs from 'fs-extra';
-import { readUrl, remoteHasSelfhosting } from './utils';
+import { readUrl, remoteHasSelfhosting, selfhostingUrl } from './utils';
 
 export enum Instructions {
   DIST_ENVFILE = 'DIST_ENVFILE',
@@ -25,9 +25,11 @@ export class Selfhosting {
     this.validateContents();
   }
 
-  public static loadFromUrl = async (url: URL): Promise<Selfhosting> => {
+  public static loadFromRemoteRepo = async (url: URL): Promise<Selfhosting> => {
     if (await remoteHasSelfhosting(url.href)) {
-      const contents = await readUrl(url);
+      const _url = new URL(selfhostingUrl(url.href));
+      const contents = await readUrl(_url);
+      // console.log(contents);
       return new Selfhosting(contents);
     }
     throw Error('Cannot find Selfhosting file at remote url');
@@ -86,16 +88,5 @@ export class Selfhosting {
           break;
       }
     });
-
-    // Add defaults if user has not specified some of the instructions
-    if (!this.distEnvFile) {
-      this.distEnvFile = '.env.dist';
-    }
-    if (!this.buildCmd) {
-      this.buildCmd = 'build';
-    }
-    if (!this.startCmd) {
-      this.startCmd = 'start';
-    }
   }
 }

@@ -12,6 +12,11 @@ export const dirName = (name: string) => {
   return path.join(hostDir, name);
 };
 
+export interface GHRepo {
+  author: string;
+  repoName: string;
+}
+
 export const setCallback = (
   chp: ChildProcessWithoutNullStreams,
   onClose: CallableFunction
@@ -56,6 +61,49 @@ export const remoteHasNpmOrYarn = async (
 ): Promise<boolean> => {
   return (
     (await remoteHasYarn(githubRepoUrl)) || (await remoteHasNpm(githubRepoUrl))
+  );
+};
+
+export const repoUrlForFile = (
+  githubRepoUrl: string,
+  filePath: string
+): string => {
+  return githubRepoUrl + '/blob/main/' + filePath;
+};
+
+export const parseGithubRepoHomePageUrl = (githubRepoUrl: string): GHRepo => {
+  const x = githubRepoUrl.replace(/\/$/, '').split('/').splice(3, 4);
+  return {
+    author: x[0],
+    repoName: x[1]
+  };
+};
+
+export const packageJsonUrl = (githubRepoUrl: string): string => {
+  const repo = parseGithubRepoHomePageUrl(githubRepoUrl);
+  return (
+    'https://raw.githubusercontent.com/' +
+    repo.author +
+    '/' +
+    repo.repoName +
+    '/main/package.json'
+  );
+};
+
+export const remoteHasPackageJson = async (
+  githubRepoUrl: string
+): Promise<boolean> => {
+  return await urlExist(packageJsonUrl(githubRepoUrl));
+};
+
+export const selfhostingUrl = (githubRepoUrl: string): string => {
+  const repo = parseGithubRepoHomePageUrl(githubRepoUrl);
+  return (
+    'https://raw.githubusercontent.com/' +
+    repo.author +
+    '/' +
+    repo.repoName +
+    '/main/Selfhosting'
   );
 };
 
