@@ -5,7 +5,6 @@ import { PackageJson } from './PackageJson';
 import { Selfhosting } from './Selfhosting';
 import {
   engine,
-  readUrl,
   remoteHasNpmOrYarn,
   remoteHasSelfhosting,
   remoteHasYarn,

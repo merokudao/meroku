@@ -13,7 +13,7 @@ anywhere.
 
 Docker Desktop is required. [Install Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
-# Usage
+# Usage (for users)
 
 ## Add an app
 
@@ -36,11 +36,17 @@ Adds a public git repo hosted at `repoUrl` with the name `name` to local hosting
 - https://github.com/r4881t/cryptoboys-nft-marketplace
 
 
-# Developer
+# For Developers
+
+In order to make your repo compatible with Meroku, you will need to add a file called `Selfhosting` and specify an appropriate environment file. The details of both are given below.
 
 1. [`Selfhosting` file Spec](docs/Selfhosting.md)
 2. [Environment Variables](docs/EnvironmentVariables.md)
 
 # Contributing
 
-Coming Soon. Check out the [roadmap](docs/Roadmap.md).
+Community Guidelines Coming Soon.
+
+# Roadmap
+
+Check out the [roadmap](docs/Roadmap.md).
