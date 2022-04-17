@@ -25,7 +25,7 @@ export class Repository {
   public async add(this: Repository) {
     const dockerFileContent = await this.generateDockerfileContents();
     const dockerFilePath = await this.saveDockerfile(dockerFileContent);
-    // await this.buildDockerImage(dockerFilePath);
+    await this.buildDockerImage(dockerFilePath);
   }
 
   public async isRemoteValid(this: Repository): Promise<boolean> {
