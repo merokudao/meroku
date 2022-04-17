@@ -23,3 +23,11 @@ Adds a public git repo hosted at `repoUrl` with the name `name` to local hosting
 
 - https://github.com/r4881t/v4-ui
 - https://github.com/r4881t/cryptoboys-nft-marketplace
+
+
+# Developer
+
+1. [`Selfhosting` file Spec](docs/Selfhosting.md)
+2. [Environment Variables](docs/EnvironmentVariables.md)
+
+# Contributing

@@ -25,20 +25,37 @@ The specifics of other instructions are mentioned below:
 
 ## Instructions
 
-### EXAMPLE_ENVFILE
+### DIST_ENVFILE
 
-Meroku recommends developers to add a file with example environment variables.
-if it is called `.env.example`, it is automatically used. If the name of file is anything else, you would use this instruction to let Meroku know about it.
+Meroku recommends developers to add a file with distribution environment variables.
+if it is called `.env.dist`, it is automatically used. If the name of file is anything else, you would use this instruction to let Meroku know about it.
 
-Usage example: In this case, the example env is `.env.dev`
+Usage example: In this case, the example env is `.env.distro`
 
 ```
-EXAMPLE_ENVFILE .env.dev
+DIST_ENVFILE .env.distro
 ```
+
+[More on env files here.](EnvironmentVariables.md)
 
 ### RUN
 
-This instruction runs a command in the shell. The Meroku shell is a `/bin/sh` from [alpine linux](https://www.alpinelinux.org).
+This instruction runs the command in a `/bin/sh` shell. The base is [alpine linux](https://www.alpinelinux.org). You can use it do any extra tasks required for your dApp to run.
+
+Examples:
+1. Download something using `wget` or `curl`
+
+```
+RUN curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | sh
+```
+
+Since any argument without instruction is interpreted as `RUN` instruction, the above could also be written as
+
+```
+curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | sh
+```
+
+2. Pre conditioning scripts.
 
 ### BUILD
 
@@ -52,13 +69,39 @@ For example - If you have a script called "build_prod" defined in `package.json`
 BUILD build_prod
 ```
 
-	
+
 ### START
 
 This instruction starts your dApp. If this is not present, meroku will do following in order:
 
 1. Look for "start" | "start:prod" | "start:dev"
 
+If this is present, that particular command will be run to start the app
+
+Meroku assumes the program to be shutting down by sending it a SIGTERM or SIGHUP. Hence, there is no explicit instruction for stopping the dApp.
+
+
+### Complete example
+
+A complete example of a `Selfhosting` file would look like
+
+
+```
+EXAMPLE_ENVFILE .env.dev
+
+# Download and install direnv
+curl -sfL https://direnv.net/install.sh | bash
+
+# Run Direnv
+/usr/local/sbin/direnv allow
+
+BUILD build
+
+START dev:start
+
+```
+
+Note that if defaults are used then the `Selfhosting` file can be an empty file as well.
 
 
 
