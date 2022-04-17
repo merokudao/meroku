@@ -87,7 +87,7 @@ A complete example of a `Selfhosting` file would look like
 
 
 ```
-EXAMPLE_ENVFILE .env.dev
+DIST_ENVFILE .env.distro
 
 # Download and install direnv
 curl -sfL https://direnv.net/install.sh | bash
