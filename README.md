@@ -43,4 +43,4 @@ Adds a public git repo hosted at `repoUrl` with the name `name` to local hosting
 
 # Contributing
 
-Coming Soon.
+Coming Soon. Check out the [roadmap](docs/Roadmap.md).
