@@ -1,6 +1,17 @@
+![MerokuDAO](./img/logoBIG.jpeg)
+
+Meroku is the world's first self hosting platform for web3.
+
+## Benefits:
+
+- It allows you (the user) to install and run dApps locally. Complete trust and security.
+- It allows you (the developer of dApp) to distribute it to a huge audience without hosting
+anywhere.
+
+
 # Prerequisites
 
-This has been tested on Mac OS X with Docker Desktop. This should work if you have Docker Desktop installed.
+Docker Desktop is required. [Install Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
 # Usage
 
@@ -31,3 +42,5 @@ Adds a public git repo hosted at `repoUrl` with the name `name` to local hosting
 2. [Environment Variables](docs/EnvironmentVariables.md)
 
 # Contributing
+
+Coming Soon.
