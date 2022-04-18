@@ -11,6 +11,7 @@
    - [ ] Custom Port support
    - [ ] HTTPS support
    - [ ] Add packaging, build and distribution
+   - [ ] Security
 - [ ] - Marketplace Module
    - [ ] Publishing of dApps (IPFS and Github support)
    - [ ] Users being able to search, install and uninstall
