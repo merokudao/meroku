@@ -1,6 +1,6 @@
 ![MerokuDAO](./img/logoBIG.jpeg)
 
-Meroku is the world's first self hosting platform for web3.
+Meroku is the world's first community owned dapp store.
 
 ## Benefits:
 
