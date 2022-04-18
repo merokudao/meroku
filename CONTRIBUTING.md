@@ -47,6 +47,16 @@ People *love* thorough bug reports. I'm not even kidding.
 
 Scan through our [existing issues](https://github.com/merokudao/meroku/issues) to find one that interests you. You can narrow down the search using `labels` as filters. See [Labels](/contributing/how-to-use-labels.md) for more information. As a general rule, we don’t assign issues to anyone. If you find an issue to work on, you are welcome to open a PR with a fix.
 
+### Pull Requests
+
+In general, PRs should:
+
+- Only fix/add the functionality in question OR address wide-spread whitespace/style issues, not both.
+- Add unit or integration tests for fixed or changed functionality (if a test suite already exists).
+- Address a single concern in the least number of changed lines as possible.
+- Include documentation in the repo or on our docs site.
+- Be accompanied by a complete Pull Request template (loaded automatically when a PR is created).
+
 ### Make Changes
 
 1. Fork the repo and create your branch from `main`.
@@ -61,6 +71,8 @@ Scan through our [existing issues](https://github.com/merokudao/meroku/issues) t
   - As you update your PR and apply changes, mark each conversation as [resolved](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/commenting-on-a-pull-request#resolving-conversations).
   - If you run into any merge issues, checkout this [git tutorial](https://lab.github.com/githubtraining/managing-merge-conflicts) to help you resolve merge conflicts and other issues.
 7. Congratulations :tada::tada: The Meroku DAO team thanks you :sparkles:.
+
+
 
 # Discussions
 
