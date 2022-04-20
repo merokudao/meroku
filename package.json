@@ -1,17 +1,17 @@
 {
-  "name": "@bitpack/selfhosting",
-  "version": "1.0.0",
-  "description": "Self Hosting web3 apps",
+  "name": "@merokudao/meroku",
+  "version": "0.0.1",
+  "description": "A community owned dApp Store",
   "main": "index.js",
-  "author": "Bitpack.me Monk!es",
-  "license": "MIT",
-  "private": true,
+  "author": "MerokuDAO Monks",
+  "license": "LGPL-2.1",
   "devDependencies": {
     "@types/debug": "^4.1.7",
     "@types/fs-extra": "^9.0.13",
     "@types/node": "^17.0.23",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^8.12.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
@@ -21,13 +21,16 @@
     "typescript": "^4.6.3"
   },
   "scripts": {
+    "copy:liquid": "copyfiles -u 1 ./src/rekocd/**/*.liquid ./build/",
     "prestart": "source $HOME/.nvm/nvm.sh; nvm use",
     "doc": "typedoc --options ./typedoc.json",
-    "build": "tsc",
+    "build": "tsc && yarn copy:liquid",
     "start": "node ./build/app.js",
     "dev": "ts-node ./src/app.ts",
     "lint": "eslint . --ext .ts",
-    "pretty": "prettier --config .prettierrc 'src/**/*.ts' --write"
+    "pretty": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "package": "yarn build && pkg -c package.json --debug build/app.js",
+    "package:clean": "rm -rf build dist && yarn package"
   },
   "dependencies": {
     "axios": "^0.26.1",
@@ -48,5 +51,18 @@
   ],
   "engines": {
     "node": ">=17.8.0"
+  },
+  "pkg": {
+    "scripts": "build/**/*.js",
+    "assets": "./src/rekocd/**/*",
+    "targets": [
+      "node16-linux-arm64",
+      "node16-linux-x64",
+      "node16-macos-x64",
+      "node16-macos-arm64",
+      "node16-win-x64",
+      "node16-win-arm64"
+    ],
+    "outputPath": "dist"
   }
 }
