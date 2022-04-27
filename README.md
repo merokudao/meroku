@@ -19,9 +19,8 @@ anywhere.
 
 ## Installation
 
-1. Download the binary for your OS and architecture from (https://github.com/merokudao/meroku/releases)[https://github.com/merokudao/meroku/releases]
-2. Update the `.env` file. In this file, update the variable `HOSTING_DIR=/workspace/hosting_dir/` to
-a location on your local filesystem. This location is used to by Meroku for internal purposes.
+1. Download the binary for your OS and architecture from [https://github.com/merokudao/meroku/releases](https://github.com/merokudao/meroku/releases) latest release.
+2. As Meroku is evolving fast, different releases might have different installation method. It is recommened to read the release doc for installation method for that release.
 
 This will install the command `meroku-(os)-(archi)` on your system.
 
