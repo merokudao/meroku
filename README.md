@@ -14,29 +14,30 @@ anywhere.
 # Prerequisites
 
 1. Docker Desktop is required. [Install Docker Desktop](https://www.docker.com/products/docker-desktop/)
-2. `nvm` or node version 17 or more.
 
 # Usage (for users)
 
 ## Installation
 
-1. Clone the repo `git clone https://github.com/merokudao/meroku.git`
+1. Download the binary for your OS and architecture from (https://github.com/merokudao/meroku/releases)[https://github.com/merokudao/meroku/releases]
 2. Update the `.env` file. In this file, update the variable `HOSTING_DIR=/workspace/hosting_dir/` to
 a location on your local filesystem. This location is used to by Meroku for internal purposes.
 
+This will install the command `meroku-(os)-(archi)` on your system.
+
 ## Add an app
 
-`node -r ts-node/register src/app.ts add <repoUrl> <name>`
+`meroku-macos-x64 add <repoUrl> <name>`
 
 Adds a public git repo hosted at `repoUrl` with the name `name` to local hosting.
 
 ## Start an app
 
-`node -r ts-node/register src/app.ts start <name>`
+`meroku-macos-x64 start <name>`
 
 ## Stop an app
 
-`node -r ts-node/register src/app.ts start <name>`
+`meroku-macos-x64 start <name>`
 
 
 ## Repos with which this can be tried

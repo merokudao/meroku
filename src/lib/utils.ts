@@ -32,8 +32,9 @@ export const setCallback = (
   });
 };
 
+const liquidPath = path.join(__dirname, '../rekocd/');
 export const engine = new Liquid({
-  root: path.resolve(__dirname, '../rekocd/'), // root for layouts/includes lookup
+  root: liquidPath,
   extname: '.liquid' // used for layouts/includes, defaults ""
 });
 
