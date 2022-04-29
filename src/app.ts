@@ -1,5 +1,5 @@
 import { program } from 'commander';
-import { add, start, stop } from './commands';
+import { add, start, stop, search } from './commands';
 
 program
   .command('add <repoUrl> <name>')
@@ -15,5 +15,10 @@ program
   .command('stop <name>')
   .description('Stop an app named <name>')
   .action(stop);
+
+program
+  .command('search <query>')
+  .description('Search for a dApp with the name containing the query')
+  .action(search);
 
 program.parse();

@@ -26,8 +26,6 @@
     "prestart": "source $HOME/.nvm/nvm.sh; nvm use",
     "doc": "typedoc --options ./typedoc.json",
     "build": "tsc && yarn copy:liquid",
-    "start": "node ./build/app.js",
-    "dev": "ts-node ./src/app.ts",
     "lint": "eslint . --ext .ts",
     "pretty": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "clean": "rm -rf build dist *.log",
@@ -36,8 +34,9 @@
     "package:clean": "yarn clean && yarn build && yarn rollup && yarn package"
   },
   "dependencies": {
+    "@merokudao/dapp-store-registry": "^0.0.3",
     "axios": "^0.26.1",
-    "chalk": "^5.0.1",
+    "chalk": "4.1.2",
     "commander": "^9.1.0",
     "debug": "^4.3.4",
     "dotenv": "^16.0.0",

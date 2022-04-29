@@ -13,6 +13,7 @@ import {
 } from './utils';
 import Debug from 'debug';
 import urlExist from 'url-exist';
+import { Dapp, RegistryListProvider } from '@merokudao/dapp-store-registry';
 
 const debug = Debug('meroku:Repository');
 
@@ -42,6 +43,36 @@ export class Repository {
     const dockerFileContent = await this.generateDockerfileContents();
     const dockerFilePath = await this.saveDockerfile(dockerFileContent);
     await this.buildDockerImage(dockerFilePath);
+  }
+
+  public async start(this: Repository) {
+    const dockerRun = spawn('docker', [
+      'run',
+      '-p',
+      '3000:3000',
+      '-d',
+      '--name',
+      this.name,
+      this.dockerImageTag()
+    ]);
+
+    setCallback(dockerRun, (code: number) => {
+      console.info('Done with code: ', code);
+    });
+  }
+
+  public async stop(this: Repository) {
+    const dockerRun = spawn('docker', ['container', 'stop', this.name]);
+
+    setCallback(dockerRun, (code: number) => {
+      console.log('Docker container stopped. Exit Code: ', code);
+      this.removeDockerImage();
+    });
+  }
+
+  public static async search(queryTxt: string): Promise<Dapp[]> {
+    const registry = await new RegistryListProvider().resolve();
+    return registry.searchForText(queryTxt).getDapps();
   }
 
   public async isRemoteValid(this: Repository): Promise<boolean> {
@@ -149,31 +180,6 @@ export class Repository {
 
   private dockerImageTag(this: Repository): string {
     return 'bitpack/' + this.name + ':latest';
-  }
-
-  public async start(this: Repository) {
-    const dockerRun = spawn('docker', [
-      'run',
-      '-p',
-      '3000:3000',
-      '-d',
-      '--name',
-      this.name,
-      this.dockerImageTag()
-    ]);
-
-    setCallback(dockerRun, (code: number) => {
-      console.info('Done with code: ', code);
-    });
-  }
-
-  public async stop(this: Repository) {
-    const dockerRun = spawn('docker', ['container', 'stop', this.name]);
-
-    setCallback(dockerRun, (code: number) => {
-      console.log('Docker container stopped. Exit Code: ', code);
-      this.removeDockerImage();
-    });
   }
 
   private removeDockerImage(this: Repository) {
