@@ -1,12 +1,12 @@
 import dotenv from 'dotenv';
-import { Repository } from '../lib';
+import { Repository, SearchOpts } from '../lib';
 import chalk from 'chalk';
 
 dotenv.config();
 const log = console.log;
 
-export const search = async (queryTxt: string) => {
-  const dApps = await Repository.search(queryTxt);
+export const search = async (queryTxt: string, opts: SearchOpts) => {
+  const dApps = await Repository.search(queryTxt, opts);
 
   const name = chalk.bold.red;
   const desc = chalk.hex('#FFA500');

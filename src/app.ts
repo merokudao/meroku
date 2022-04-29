@@ -17,8 +17,12 @@ program
   .action(stop);
 
 program
-  .command('search <query>')
-  .description('Search for a dApp with the name containing the query')
+  .command('search')
+  .argument('<query>', 'Type a few characters to search for a dApp')
+  .option('-t, --tag <tag>', 'Filter dApps by this tag')
+  .option('-c, --chainId <chainId>', 'Filter dApps by this chainId only')
+  .option('-n, --name', 'Search in name', true)
+  .option('-d, --description', 'Search in description', false)
   .action(search);
 
 program.parse();

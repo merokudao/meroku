@@ -17,6 +17,13 @@ import { Dapp, RegistryListProvider } from '@merokudao/dapp-store-registry';
 
 const debug = Debug('meroku:Repository');
 
+export interface SearchOpts {
+  tag?: string;
+  description?: boolean;
+  name?: boolean;
+  chainId?: string | number;
+}
+
 /**
  * Repository Class
  */
@@ -70,9 +77,28 @@ export class Repository {
     });
   }
 
-  public static async search(queryTxt: string): Promise<Dapp[]> {
+  public static async search(
+    queryTxt: string,
+    opts: SearchOpts
+  ): Promise<Dapp[]> {
     const registry = await new RegistryListProvider().resolve();
-    return registry.searchForText(queryTxt).getDapps();
+    const searchFields = ['name'];
+    if (opts.description) {
+      searchFields.push('description');
+    }
+    let _reg = registry.searchForText(queryTxt, searchFields);
+
+    if (opts.chainId) {
+      _reg = _reg.filterByChainId(
+        typeof opts.chainId === 'string' ? parseInt(opts.chainId) : opts.chainId
+      );
+    }
+
+    if (opts.tag) {
+      _reg = _reg.filterByTag(opts.tag);
+    }
+
+    return _reg.getDapps();
   }
 
   public async isRemoteValid(this: Repository): Promise<boolean> {
