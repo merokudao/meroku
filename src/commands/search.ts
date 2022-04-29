@@ -6,6 +6,7 @@ dotenv.config();
 const log = console.log;
 
 export const search = async (queryTxt: string, opts: SearchOpts) => {
+  // log(opts);
   const dApps = await Repository.search(queryTxt, opts);
 
   const name = chalk.bold.red;

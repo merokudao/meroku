@@ -18,10 +18,10 @@ import { Dapp, RegistryListProvider } from '@merokudao/dapp-store-registry';
 const debug = Debug('meroku:Repository');
 
 export interface SearchOpts {
-  tag?: string;
+  tag?: string[];
   description?: boolean;
   name?: boolean;
-  chainId?: string | number;
+  chainId?: string[] | number[];
 }
 
 /**
@@ -89,13 +89,19 @@ export class Repository {
     let _reg = registry.searchForText(queryTxt, searchFields);
 
     if (opts.chainId) {
-      _reg = _reg.filterByChainId(
-        typeof opts.chainId === 'string' ? parseInt(opts.chainId) : opts.chainId
-      );
+      let _chainIds: number[] = [];
+      if (typeof opts.chainId[0] === 'string') {
+        _chainIds = opts.chainId.map((x) => parseInt(x as string, 10));
+      }
+      for (const chainId of _chainIds) {
+        _reg = _reg.filterByChainId(chainId);
+      }
     }
 
     if (opts.tag) {
-      _reg = _reg.filterByTag(opts.tag);
+      for (const tag of opts.tag) {
+        _reg = _reg.filterByTag(tag);
+      }
     }
 
     return _reg.getDapps();

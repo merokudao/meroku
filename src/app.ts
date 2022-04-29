@@ -19,10 +19,12 @@ program
 program
   .command('search')
   .argument('<query>', 'Type a few characters to search for a dApp')
-  .option('-t, --tag <tag>', 'Filter dApps by this tag')
-  .option('-c, --chainId <chainId>', 'Filter dApps by this chainId only')
-  .option('-n, --name', 'Search in name', true)
+  .option('-t, --tag [tag...]', 'Filter dApps by these tags only')
+  .option('-c, --chainId [chainId...]', 'Filter dApps by these chainIds only')
   .option('-d, --description', 'Search in description', false)
+  .description(
+    'Search for dApps. Searches by default in dApp name across all chains'
+  )
   .action(search);
 
 program.parse();
