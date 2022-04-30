@@ -2,8 +2,13 @@ import { program } from 'commander';
 import { add, start, stop, search } from './commands';
 
 program
-  .command('add <repoUrl> <name>')
-  .description('Add a new dApp to your BitPack Self Hosting')
+  .command('add')
+  .argument('<name>', 'Name of the dApp')
+  .option(
+    '-u, --url [url]',
+    'URL of the dApp. If this is not present the name of the app should match the app name in dApp store'
+  )
+  .description('Add a new dApp to Meroku Self Hosting')
   .action(add);
 
 program

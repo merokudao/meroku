@@ -24,6 +24,11 @@ export interface SearchOpts {
   chainId?: string[] | number[];
 }
 
+export interface AddOpts {
+  name: string;
+  url?: string;
+}
+
 /**
  * Repository Class
  */
@@ -77,6 +82,20 @@ export class Repository {
     });
   }
 
+  public static async fromExactName(
+    name: string
+  ): Promise<Repository | undefined> {
+    const registry = await new RegistryListProvider().resolve();
+    const dApps = registry.searchForExactName(name);
+    if (dApps.length === 1) {
+      return new Repository(name, dApps[0].repoUrl);
+    } else if (dApps.length > 1) {
+      throw new Error('More than one dapp found for name: ' + name);
+    } else if (dApps.length === 0) {
+      throw new Error('No dapp found for name: ' + name);
+    }
+  }
+
   public static async search(
     queryTxt: string,
     opts: SearchOpts
@@ -92,6 +111,8 @@ export class Repository {
       let _chainIds: number[] = [];
       if (typeof opts.chainId[0] === 'string') {
         _chainIds = opts.chainId.map((x) => parseInt(x as string, 10));
+      } else {
+        _chainIds = opts.chainId as number[];
       }
       for (const chainId of _chainIds) {
         _reg = _reg.filterByChainId(chainId);

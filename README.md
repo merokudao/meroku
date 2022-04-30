@@ -24,6 +24,35 @@ anywhere.
 
 This will install the command `meroku-(os)-(archi)` on your system.
 
+## Search for an app
+
+### Basic
+
+`meroku-macos-x64 search <queryText>` Search for all dApps with the query 'queryText'.
+
+### Advanced
+
+Search across name and description. Additionally filter in the results using specific
+tags or chains.
+
+```
+$ meroku-macos-x64 search -h
+Usage: app search [options] <query>
+
+Search for dApps. Searches by default in dApp name across all chains
+
+Arguments:
+  query                       Type a few characters to search for a dApp
+
+Options:
+  -t, --tag [tag...]          Filter dApps by these tags only
+  -c, --chainId [chainId...]  Filter dApps by these chainIds only
+  -d, --description           Search in description (default: false)
+  -h, --help                  display help for command
+```
+
+You can provide multiple chains like `-c 137 1 80001` and similarly multiple tags like `-t tag1 tag2` and so on.
+
 ## Add an app
 
 `meroku-macos-x64 add <repoUrl> <name>`

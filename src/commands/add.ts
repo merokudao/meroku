@@ -1,8 +1,15 @@
 import dotenv from 'dotenv';
-import { Repository } from '../lib';
+import { AddOpts, Repository } from '../lib';
 
 dotenv.config();
 
-export const add = async (repoUrl: string, name: string) => {
-  return new Repository(name, repoUrl).add();
+export const add = async (name: string, opts: AddOpts) => {
+  if (opts.url) {
+    return new Repository(name, opts.url).add();
+  } else {
+    const repo = await Repository.fromExactName(name);
+    if (repo) {
+      return repo.add();
+    }
+  }
 };

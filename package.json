@@ -34,7 +34,7 @@
     "package:clean": "yarn clean && yarn build && yarn rollup && yarn package"
   },
   "dependencies": {
-    "@merokudao/dapp-store-registry": "^0.0.3",
+    "@merokudao/dapp-store-registry": "^0.0.4",
     "axios": "^0.26.1",
     "chalk": "4.1.2",
     "commander": "^9.1.0",

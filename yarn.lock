@@ -57,10 +57,10 @@
   resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@merokudao/dapp-store-registry@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@merokudao/dapp-store-registry/-/dapp-store-registry-0.0.3.tgz#4cff164fb2ddf73029a1fa260dc694ef940e7dfa"
-  integrity sha512-4I+QCtEX58IL32WXKLb5KuWzOJxLJOpH5XTn/HtMDMeFyPW7k95KlYTbqNCgKVZtVqxZoLkqhLgwZ03SI1FeBw==
+"@merokudao/dapp-store-registry@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@merokudao/dapp-store-registry/-/dapp-store-registry-0.0.4.tgz#f97d4a17bbf0f55e5be8a45a64c5e85ef54f8997"
+  integrity sha512-QS7g+F4kCsqFea8qO23gNa4y0pK+BpET/tuWE3GLrNDFIt2UtHC53rLG9tu6vsfABpmC3DE3mPk6HF9Hik19Ww==
   dependencies:
     cross-fetch "^3.1.5"
     fs-extra "^10.1.0"
