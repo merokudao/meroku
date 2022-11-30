@@ -10,6 +10,10 @@ Please note: We don't have a website or any token. This repo is only official sp
 - It allows you (the developer of dApp) to distribute it to a huge audience without hosting
 anywhere.
 
+# Architecture
+
+The high level architecture is available at [Archi](./docs/Archi.md).
+
 
 # Prerequisites
 
