@@ -928,10 +928,10 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-liquidjs@^9.36.0:
-  version "9.36.1"
-  resolved "https://registry.npmjs.org/liquidjs/-/liquidjs-9.36.1.tgz"
-  integrity sha512-oPkCjPNoE9JQ4AVK02bFJy/gEoZ5SDATR0cvSTUwh63XZNJaFiVLOHoFbz/2s3bd86w7Obgznv6L0arHAD9eAQ==
+liquidjs@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/liquidjs/-/liquidjs-10.0.0.tgz#282579e9f90f4bfd92ef7d09ad4f5aac3ec9fd61"
+  integrity sha512-uY3fKqBSRmnat0wB5qWk0W5N5iT78OUhuIXNRiMfhYQ3p35al9mEWKQ68/Z+WD54V2upaxEM8nHaZ6o1B8WCMA==
 
 lodash.merge@^4.6.2:
   version "4.6.2"
