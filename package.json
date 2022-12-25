@@ -41,7 +41,7 @@
     "debug": "^4.3.4",
     "dotenv": "^16.0.0",
     "fs-extra": "^10.0.1",
-    "liquidjs": "^9.36.0",
+    "liquidjs": "^10.0.0",
     "url-exist": "2.0.2",
     "winston": "^3.7.2"
   },
